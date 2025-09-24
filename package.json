@@ -13,8 +13,10 @@
     "@observablehq/plot": "^0.6.17",
     "@tailwindcss/vite": "^4.1.13",
     "astro": "^5.13.10",
+    "daisy": "^0.2.0",
     "jsdom": "^26.1.0",
-    "tailwindcss": "^4.1.13"
+    "tailwindcss": "^4.1.13",
+    "ui": "^0.2.4"
   },
   "devDependencies": {
     "@types/jsdom": "^21.1.7"

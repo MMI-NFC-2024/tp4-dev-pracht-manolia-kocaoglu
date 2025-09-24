@@ -12,6 +12,15 @@ import "../styles/global.css";
     <title>Astro Basics</title>
   </head>
   <body>
+    <nav class="bg-blue-400 text-white shadow-md">
+      <ul class="flex space-x-4 p-4">
+      <li><a href="/" class="hover:underline border border-white p-2">Home</a></li>
+      <li><a href="/simple_penguins" class="hover:underline border border-white p-2">Simple Penguins</a></li>
+      <li><a href="/filtre_penguins" class="hover:underline border border-white p-2">Premier Filtre</a></li>
+      <li><a href="/filtre2_penguins" class="hover:underline border border-white p-2">Deuxième Filtre</a></li>
+      <li><a href="/olympians" class="hover:underline border border-white p-2">Olympians</a></li>
+      </ul>
+    </nav>
     <slot />
   </body>
 </html>

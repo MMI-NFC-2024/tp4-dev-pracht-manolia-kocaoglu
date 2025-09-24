@@ -3,65 +3,75 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-  <h1 class="text-2xl">Test Astro et Plot (Observablehq)</h1>
-  <div id="myplot"></div>
-  <select name="species" id="species">
-    <option value="">All species</option>
-    <option value="Adelie">Adelie</option>
-    <option value="Chinstrap">Chinstrap</option>
-    <option value="Gentoo">Gentoo</option>
-  </select>
-  <select name="island" id="island">
-    <option value="">All islands</option>
-    <option value="Biscoe">Biscoe</option>
-    <option value="Dream">Dream</option>
-    <option value="Torgersen">Torgersen</option>
-  </select>
-  <select name="sex" id="sex">
-    <option value="">All sexes</option>
-    <option value="MALE">Male</option>
-    <option value="FEMALE">Female</option>
-  </select>
-  </Layout>
+    <h1 class="text-2xl font-bold text-center my-4">Test Astro et Plot (Observablehq)</h1>
+    <div class="flex flex-col items-center space-y-4">
+        <div id="myplot" class="w-full max-w-4xl border border-gray-300 rounded-lg shadow-md p-4 bg-white"></div>
+        <div class="flex flex-wrap justify-center gap-4">
+            <div>
+                <label for="species" class="block text-sm font-medium text-gray-700">Species</label>
+                <select name="species" id="species" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    <option value="">All species</option>
+                    <option value="Adelie">Adelie</option>
+                    <option value="Chinstrap">Chinstrap</option>
+                    <option value="Gentoo">Gentoo</option>
+                </select>
+            </div>
+            <div>
+                <label for="island" class="block text-sm font-medium text-gray-700">Island</label>
+                <select name="island" id="island" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    <option value="">All islands</option>
+                    <option value="Biscoe">Biscoe</option>
+                    <option value="Dream">Dream</option>
+                    <option value="Torgersen">Torgersen</option>
+                </select>
+            </div>
+            <div>
+                <label for="sex" class="block text-sm font-medium text-gray-700">Sex</label>
+                <select name="sex" id="sex" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    <option value="">All sexes</option>
+                    <option value="MALE">Male</option>
+                    <option value="FEMALE">Female</option>
+                </select>
+            </div>
+        </div>
+    </div>
 
-  <script>
-
+    <script>
         import * as Plot from "@observablehq/plot";
         import penguins from "../assets/penguins.json";
-    
+
         const selectSpecies = document.getElementById("species");
         const selectIsland = document.getElementById("island");
         const selectSex = document.getElementById("sex");
-    
-        function renderPlot() {
 
+        function renderPlot() {
             const species = selectSpecies.value;
             const island = selectIsland.value;
             const sex = selectSex.value;
-    
+
             const plotDiv = document.getElementById("myplot");
-     
+
             plotDiv.innerHTML = "";
-     
+
             const plot = Plot.plot({
                 marks: [
                     Plot.dot(penguins, {
                         x: "culmen_length_mm",
-                        y: "culmen_depth_mm", 
-                        stroke: "species", 
-                        filter: (d) => 
-                        (!species || d.species === species ) &&
-                        (!island || d.island === island) &&
-                        (!sex || d.sex === sex)
+                        y: "culmen_depth_mm",
+                        stroke: "species",
+                        filter: (d) =>
+                            (!species || d.species === species) &&
+                            (!island || d.island === island) &&
+                            (!sex || d.sex === sex),
                     }),
                 ],
             });
             plotDiv.appendChild(plot);
         }
-    
+
         selectSpecies.addEventListener("change", renderPlot);
         selectIsland.addEventListener("change", renderPlot);
         selectSex.addEventListener("change", renderPlot);
-    
+
         renderPlot();
     </script>

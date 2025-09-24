@@ -1,0 +1,69 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+    <h1 class="text-3xl font-bold text-center mt-8 mb-6">Test Astro et Plot (Observablehq)</h1>
+    <div class="flex flex-col items-center space-y-6">
+        <div class="flex flex-wrap justify-center gap-4">
+            <select name="sport" id="sport" class="border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <option value="">Sports</option>
+                <option value="athletics">Athletics</option>
+                <option value="aquatics">Aquatics</option>
+                <option value="boxing">Boxing</option>
+            </select>
+            <select name="sex" id="sex" class="border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <option value="">All sexes</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            <select name="nationality" id="nationality" class="border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <option value="">Nationalities</option>
+                <option value="AUS">Australian</option>
+                <option value="KOR">Korean</option>
+                <option value="EGY">Egyptian</option>
+            </select>
+        </div>
+        <div id="myplot" class="w-full max-w-4xl border border-gray-200 rounded-lg shadow-md p-4 bg-white"></div>
+    </div>
+</Layout>
+
+<script>
+    import * as Plot from "@observablehq/plot";
+    import olympians from "../assets/olympians.json";
+
+    const selectSport = document.getElementById("sport");
+    const selectSex = document.getElementById("sex");
+    const selectNationality = document.getElementById("nationality");
+
+    function renderPlot() {
+        const sport = selectSport.value;
+        const sex = selectSex.value;
+        const nationality = selectNationality.value;
+
+        const plotDiv = document.getElementById("myplot");
+
+        plotDiv.innerHTML = "";
+
+        const plot = Plot.plot({
+            marks: [
+                Plot.dot(olympians, {
+                    x: "weight",
+                    y: "height",
+                    stroke: "sport",
+                    filter: (d) =>
+                        (!sport || d.sport === sport) &&
+                        (!sex || d.sex === sex) &&
+                        (!nationality || d.nationality === nationality),
+                }),
+            ],
+        });
+        plotDiv.appendChild(plot);
+    }
+
+    selectSport.addEventListener("change", renderPlot);
+    selectSex.addEventListener("change", renderPlot);
+    selectNationality.addEventListener("change", renderPlot);
+
+    renderPlot();
+</script>
